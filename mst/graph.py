@@ -41,4 +41,42 @@ class Graph:
         `heapify`, `heappop`, and `heappush` functions.
 
         """
-        self.mst = None
+        V = list(range(self.adj_mat.shape[0]))
+    
+        s = 0 # arbitrarily initializing to start at 0th node
+        S = set([s])
+
+        # keeping dict of known cheapest costs from S to node "key" 
+        lowest_costs = {v: float('inf') for v in V}
+        lowest_costs[s] = 0
+
+        # keeping track of edges used to get to node "key" from S
+        pred = {v: None for v in V}
+        pred[s] = s
+
+        # initializing pq
+        pq = []
+        for v in V:
+            heapq.heappush(pq, (lowest_costs[v], v))
+        
+        while pq:
+            _, u = heapq.heappop(pq)
+            S.add(u)
+
+            u_neighbors = self.adj_mat[u].nonzero()[0]
+            for v in u_neighbors:
+                if v not in S:
+                    cost_to_v = self.adj_mat[u, v]
+                    if cost_to_v < lowest_costs[v]:
+                        lowest_costs[v] = cost_to_v
+                        pred[v] = u
+                        heapq.heappush(pq, (cost_to_v, v))
+
+
+        # assembling MST using info from pred and lowest_costs
+        self.mst = np.zeros(self.adj_mat.shape)
+        for u, v in pred.items():
+            self.mst[u, v] = lowest_costs[u]
+            self.mst[v, u] = lowest_costs[u]
+        
+        return lowest_costs
