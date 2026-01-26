@@ -91,11 +91,8 @@ def test_mst_single_cell_data():
 
 def test_mst_student():
     """
-    
-    TODO: Write at least one unit test for MST construction.
-    
+    test case 1: Normal MST construction for another custom example network
     """
-    # test case 1: Normal MST construction for another custom example network
     file_path = 'data/medium.csv'
     g = Graph(file_path)
     g.construct_mst()
@@ -104,7 +101,10 @@ def test_mst_student():
 
     check_mst(g.adj_mat, g.mst, expected_weight)
 
-    # test case 2: Check that MST is invalid when unconnected network is input
+def test_mst_student_2():
+    """
+    test case 2: Check that MST is invalid when unconnected network is input
+    """
     file_path = 'data/not_connected.csv'
     g = Graph(file_path)
     g.construct_mst()
