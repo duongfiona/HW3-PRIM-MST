@@ -110,4 +110,4 @@ def test_mst_student_2():
     g.construct_mst()
 
     with pytest.raises(AssertionError):
-        check_mst(g.adj_mat, g.mst, 0)
+        check_mst(g.adj_mat, g.mst, 12)
