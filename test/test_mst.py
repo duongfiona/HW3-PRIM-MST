@@ -40,7 +40,8 @@ def check_mst(adj_mat: np.ndarray,
                     dfs(neighbor)
 
         dfs(0)
-        return all(visited)
+        # return all(visited) Error caught after hw turn in
+        return len(visited) == n # fixed error
 
     # checking total weight of MST
     total = 0
